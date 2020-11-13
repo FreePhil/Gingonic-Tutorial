@@ -21,8 +21,14 @@ func main() {
 	//
 	setupLogOutput()
 	server := gin.New()
+
+	server.Static("/css", "./template/css")
+	server.LoadHTMLGlob("templates/*.html")
+
 	server.Use(gin.Recovery(), middleware.Logger(),
 		middleware.BasicAuth(), gindump.Dump())
+
+	apiRoutes := server.Group("/api")
 
 	// routing
 	//
